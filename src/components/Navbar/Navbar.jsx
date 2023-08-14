@@ -6,7 +6,7 @@ import './Navbar.css';
 import FilterVideo from '../FilterVideo/FilterVideo';
 import FilterTab from '../FilterTab/FilterTab';
 
-const Navbar = ({ tabs, onTabClick, onSearch }) => {
+const Navbar = ({ tabs, onTabClick, onSearch, activeTabId }) => {
   const [isSearching, setIsSearching] = useState(false);
   const location = useLocation();
 
@@ -45,7 +45,11 @@ const Navbar = ({ tabs, onTabClick, onSearch }) => {
       </div>
       {!isSearching && (
         <div className='navbar-tab'>
-          <FilterTab tabs={tabs} onTabClick={onTabClick} />
+          <FilterTab
+            tabs={tabs}
+            onTabClick={onTabClick}
+            activeTabId={activeTabId}
+          />
         </div>
       )}
     </Fragment>

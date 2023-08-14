@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import './VideoDetail.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserCheck } from '@fortawesome/free-solid-svg-icons';
@@ -8,12 +8,22 @@ import CommentList from '../CommentList/CommentList';
 
 const VideoDetail = ({ video, videoSrc, products, comments, postComment }) => {
   const [isClicked, setIsClicked] = useState(false);
+  const videoRef = useRef(null);
 
   if (!video)
     return <div>Pilih video dari daftar untuk melihat detailnya.</div>;
 
   const handleOverlayClick = () => {
     setIsClicked(true);
+
+    // Memulai pemutaran video dengan YouTube Player API
+    if (videoRef.current) {
+      const videoIframe = videoRef.current;
+      videoIframe.contentWindow.postMessage(
+        '{"event":"command","func":"playVideo","args":""}',
+        '*'
+      );
+    }
   };
 
   const handleCommentSubmit = (username, commentText) => {
@@ -22,15 +32,18 @@ const VideoDetail = ({ video, videoSrc, products, comments, postComment }) => {
 
   return (
     <div className='video-detail'>
-      <div className='iframe-container' onClick={handleOverlayClick}>
+      <div className='iframe-container'>
         <iframe
+          ref={videoRef}
           title='video player'
           className='video-player'
-          src={videoSrc}
+          src={videoSrc + '?autoplay=1&enablejsapi=1'}
           allowFullScreen
         />
-        <h2 className='video-titlle'>{video.title}</h2>
-        {!isClicked && <div className='iframe-overlay'></div>}
+        <h2 className='video-title'>{video.title}</h2>
+        {!isClicked && (
+          <div className='iframe-overlay' onClick={handleOverlayClick}></div>
+        )}
       </div>
       <p className='video-description'>
         <FontAwesomeIcon className='icon-desc' icon={faUserCheck} />{' '}

@@ -5,24 +5,21 @@
   margin: 0 auto;
 }
 
-.comment-form input {
-  max-width: 100%;
-  padding: 10px;
+.comment-form input,
+.comment-form textarea {
+  padding: 10px 15px;
   border: 1px solid #e5e5e5;
   border-radius: 5px;
   font-family: Arial, sans-serif;
   font-size: 14px;
+  background-color: #f7f7f7;
+  transition: border 0.3s;
 }
 
-.comment-form textarea {
-  max-width: 100%;
-  height: 120px;
-  padding: 10px;
-  border: 1px solid #e5e5e5;
-  border-radius: 5px;
-  resize: vertical;
-  font-family: Arial, sans-serif;
-  font-size: 14px;
+.comment-form input:focus,
+.comment-form textarea:focus {
+  border-color: #00aa5b;
+  outline: none;
 }
 
 .comment-form button {

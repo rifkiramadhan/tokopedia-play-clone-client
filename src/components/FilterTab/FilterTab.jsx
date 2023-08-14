@@ -1,13 +1,13 @@
 import React from 'react';
 import './FilterTab.css';
 
-const FilterTab = ({ tabs, onTabClick }) => {
+const FilterTab = ({ tabs, onTabClick, activeTabId }) => {
   return (
     <div className='filter-tab-container'>
       <div className='tabs'>
         {tabs.map((tab) => (
           <button
-            className='tab'
+            className={`tab ${tab._id === activeTabId ? 'selected' : ''}`}
             key={tab._id}
             onClick={() => onTabClick(tab._id)}
           >

@@ -7,6 +7,7 @@ import { HomePage, VideoDetailPage } from './pages';
 import BASE_URL from './config/Config';
 
 function App() {
+  const [activeTabId, setActiveTabId] = useState(null);
   const [viewedVideos, setViewedVideos] = useState(new Set());
   const [comments, setComments] = useState({});
   const [products, setProducts] = useState({});
@@ -119,6 +120,7 @@ function App() {
   };
 
   const fetchVideosByCategory = async (categoryId) => {
+    setLoading(true);
     try {
       const response = await axios.get(
         `${BASE_URL}/videos/category/${categoryId}`
@@ -126,11 +128,14 @@ function App() {
       setVideos(response.data);
     } catch (error) {
       setError(error);
+    } finally {
+      setLoading(false);
     }
   };
 
   const handleCategorySelect = (categoryId) => {
     fetchVideosByCategory(categoryId);
+    setActiveTabId(categoryId);
   };
 
   if (loading) return <Loading />;
@@ -143,6 +148,7 @@ function App() {
           tabs={categories}
           onTabClick={handleCategorySelect}
           onSearch={handleSearch}
+          activeTabId={activeTabId}
         />{' '}
         <Routes>
           <Route
@@ -152,6 +158,7 @@ function App() {
                 videos={videos}
                 fetchProductsByVideoId={fetchProductsByVideoId}
                 incrementViewCount={incrementViewCount}
+                loading={loading}
               />
             }
           />
@@ -165,6 +172,7 @@ function App() {
                 postComment={postComment}
                 fetchComments={fetchCommentsByVideoId}
                 fetchProductsByVideoId={fetchProductsByVideoId}
+                loading={loading}
               />
             }
           />

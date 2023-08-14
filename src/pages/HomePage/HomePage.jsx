@@ -1,8 +1,14 @@
 import React, { Fragment } from 'react';
-import { VideoList } from '../../components';
+import { Loading, VideoList } from '../../components';
 import { useNavigate } from 'react-router-dom';
+import './HomePage.css';
 
-const HomePage = ({ videos, fetchProductsByVideoId, incrementViewCount }) => {
+const HomePage = ({
+  videos,
+  fetchProductsByVideoId,
+  incrementViewCount,
+  loading,
+}) => {
   const navigate = useNavigate();
 
   const handleVideoSelect = (video) => {
@@ -13,10 +19,12 @@ const HomePage = ({ videos, fetchProductsByVideoId, incrementViewCount }) => {
 
   return (
     <Fragment>
-      {videos.length ? (
+      {loading ? (
+        <Loading />
+      ) : videos.length ? (
         <VideoList videos={videos} onVideoSelect={handleVideoSelect} />
       ) : (
-        <p style={{ height: '100vh' }}>Data tidak tersedia</p>
+        <p className='no-data-available'>Data video masih kosong.</p>
       )}
     </Fragment>
   );

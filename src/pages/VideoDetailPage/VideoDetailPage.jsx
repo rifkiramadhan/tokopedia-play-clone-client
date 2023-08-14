@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Loading, VideoDetail } from '../../components';
+import { VideoDetail } from '../../components';
 import { useParams } from 'react-router-dom';
 
 const VideoDetailPage = ({
@@ -21,10 +21,6 @@ const VideoDetailPage = ({
   const videoSrc = `https://www.youtube.com/embed/${video.thumbnail}`;
   const productsForThisVideo = allProducts[videoId] || [];
   const commentsForThisVideo = allComments[videoId] || [];
-
-  if (!videos) {
-    return <Loading />;
-  }
 
   return (
     <VideoDetail
