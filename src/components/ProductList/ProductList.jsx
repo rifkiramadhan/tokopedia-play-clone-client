@@ -1,5 +1,6 @@
 import React from 'react';
 import './ProductList.css';
+import { NumericFormat } from 'react-number-format';
 
 const ProductList = ({ products }) => (
   <div className='product-list-container'>
@@ -9,7 +10,15 @@ const ProductList = ({ products }) => (
           <img src={product.linkProduct} alt={product.title} />
 
           <h4>{product.title}</h4>
-          <p>{product.price}</p>
+
+          <NumericFormat
+            value={product.price}
+            displayType={'text'}
+            thousandSeparator={'.'}
+            decimalSeparator={','}
+            prefix={'Rp '}
+            renderText={(value) => <p>{value}</p>}
+          />
         </div>
       ))}
     </div>
