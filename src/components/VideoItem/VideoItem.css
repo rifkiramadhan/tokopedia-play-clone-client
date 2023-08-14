@@ -1,0 +1,117 @@
+.video-item {
+  flex: 1;
+  padding: 15px;
+  box-sizing: border-box;
+  max-width: 300px;
+  cursor: pointer;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.video-thumbnail {
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+}
+
+.video-item img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+  z-index: -1;
+}
+
+.video-text {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  right: 10px;
+  color: #fff;
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.7);
+  z-index: 1;
+}
+
+.text-live {
+  position: absolute;
+  top: 0;
+  top: 10px;
+  left: 10px;
+}
+
+.text-live,
+.text-promo {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.text-live .live {
+  background-color: red;
+  color: white;
+  font-weight: bold;
+  border-radius: 5px;
+  padding: 2px 5px;
+  margin-bottom: 5px;
+}
+
+.text-live .views {
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+  font-weight: bold;
+  border-radius: 5px;
+  padding: 2px 5px;
+  margin-bottom: 5px;
+}
+
+.text-promo {
+  position: absolute;
+  display: grid;
+  gap: 0;
+  bottom: 5px;
+}
+
+.text-promo .promo {
+  background-color: red;
+  width: fit-content;
+  color: white;
+  font-size: 10px;
+  font-weight: bold;
+  border-radius: 5px;
+  padding: 2px 5px;
+  margin-bottom: 5px;
+}
+
+.text-promo .kupon {
+  background-color: lightgreen;
+  width: fit-content;
+  color: white;
+  font-size: 10px;
+  font-weight: bold;
+  border-radius: 5px;
+  padding: 2px 5px;
+  margin-bottom: 5px;
+}
+
+.video-item h4 {
+  margin: 10px 0;
+  font-size: 18px;
+  font-weight: 500;
+  text-align: left;
+}
+
+.video-item p {
+  font-size: 14px;
+  margin: 0;
+  font-weight: 500;
+  text-align: left;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.video-item.selected {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}

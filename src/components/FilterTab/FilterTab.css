@@ -1,0 +1,48 @@
+.filter-tab-container {
+  display: flex;
+  margin-top: 10px;
+}
+
+.tabs {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  white-space: nowrap;
+  -webkit-overflow-scrolling: touch;
+}
+
+.tabs::-webkit-scrollbar {
+  display: none;
+}
+.tab {
+  cursor: pointer;
+  font-size: 14px;
+  line-height: 20px;
+  padding: 10px 16px;
+  border-radius: 16px;
+  transition: all 0.2s ease-out 0s;
+  color: var(--NN0, #ffffff);
+  border: 1px solid var(--NN600, #6d7588);
+  background-color: transparent;
+}
+
+.tab:hover {
+  background-color: rgba(4, 228, 19, 0.08);
+}
+
+.tab:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(4, 228, 19, 0.3);
+}
+
+.tab:active {
+  color: rgb(4, 228, 19);
+  border: 1px solid #00aa5b;
+  background-color: rgba(46, 135, 40, 0.18);
+}
+
+.tab.selected {
+  color: rgb(4, 228, 19);
+  border: 1px solid #00aa5b;
+  background-color: rgba(46, 135, 40, 0.18);
+}

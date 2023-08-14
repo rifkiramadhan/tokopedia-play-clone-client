@@ -1,0 +1,97 @@
+.video-detail {
+  position: relative;
+  padding: 20px;
+  box-sizing: border-box;
+  width: 100%;
+  text-align: left;
+}
+
+.video-detail h2 {
+  font-size: 24px;
+}
+
+.iframe-container {
+  position: relative;
+  width: 100%;
+  padding-top: 56.25%;
+  cursor: pointer;
+  overflow: hidden;
+  border-radius: 5px;
+}
+
+.video-player {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+.video-titlle {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  color: #fff;
+  font-size: 18px;
+  background-color: rgba(0, 0, 0, 0.6);
+  padding: 5px 10px;
+  border-radius: 5px;
+  z-index: 1;
+}
+
+.iframe-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 0;
+}
+
+.video-detail h2.product-title,
+.video-detail h2.comment-title {
+  font-size: 18px;
+  font-weight: bold;
+  top: 40px;
+  color: #555;
+}
+
+.video-detail .product-paragraph {
+  color: #555;
+  margin-bottom: 2rem;
+}
+.video-detail .comment-paragraph {
+  color: #555;
+  margin-bottom: 2rem;
+}
+
+.video-detail p.video-description {
+  margin-bottom: 2rem;
+}
+
+.video-detail p.video-description span {
+  font-size: 20px;
+  font-weight: bold;
+  top: 40px;
+  color: #555;
+}
+
+.video-detail p.video-description .icon-desc {
+  color: green;
+}
+
+.iframe-container {
+  position: relative;
+}
+
+.iframe-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  cursor: pointer;
+  z-index: 10;
+}

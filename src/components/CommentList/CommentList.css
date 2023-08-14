@@ -1,0 +1,28 @@
+.comment-list {
+  margin-top: 20px;
+  color: black;
+}
+
+.comment-item {
+  padding: 10px 0;
+  border-bottom: 1px solid #e5e5e5;
+  margin-bottom: 10px;
+}
+
+.comment-item strong {
+  color: #333;
+}
+
+.comment-item strong span {
+  color: #555;
+}
+
+.comment-item p {
+  margin-top: 5px;
+  color: #555;
+}
+
+.icon-user {
+  color: green;
+  font-size: 20px;
+}
