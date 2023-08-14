@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import './App.css';
 import axios from 'axios';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Navbar, Footer, Loading, Error } from './components';
 import { HomePage, VideoDetailPage } from './pages';
+import useDataFetch from './hooks/useDataFetch';
 import BASE_URL from './config/Config';
 
 function App() {
@@ -11,29 +12,18 @@ function App() {
   const [viewedVideos, setViewedVideos] = useState(new Set());
   const [comments, setComments] = useState({});
   const [products, setProducts] = useState({});
-  const [categories, setCategories] = useState([]);
-  const [videos, setVideos] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [searchResults, setSearchResults] = useState(null);
+  const [categoryResults, setCategoryResults] = useState(null);
 
-  useEffect(() => {
-    console.log(BASE_URL);
-    const fetchData = async () => {
-      try {
-        const videosResponse = await axios.get(`${BASE_URL}/videos`);
-        const categoriesResponse = await axios.get(`${BASE_URL}/categories`);
+  const { data: videos, loading: videosLoading } = useDataFetch(
+    `${BASE_URL}/videos`
+  );
+  const { data: categories, loading: categoriesLoading } = useDataFetch(
+    `${BASE_URL}/categories`
+  );
 
-        setVideos(videosResponse.data);
-        setCategories(categoriesResponse.data);
-        setLoading(false);
-      } catch (error) {
-        setError(error);
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, []);
+  const displayedVideos = searchResults || categoryResults || videos;
 
   const handleSearch = async (query) => {
     if (query) {
@@ -41,13 +31,13 @@ function App() {
         const response = await axios.get(
           `${BASE_URL}/videos/search?search=${query}`
         );
-        setVideos(response.data);
+        setSearchResults(response.data);
+        setCategoryResults(null);
       } catch (error) {
         setError(error);
       }
     } else {
-      const videosResponse = await axios.get(`${BASE_URL}/videos`);
-      setVideos(videosResponse.data);
+      setSearchResults(null);
     }
   };
 
@@ -60,17 +50,22 @@ function App() {
         setViewedVideos((prev) => new Set([...prev, videoId]));
 
         // Update jumlah view pada video di state
-        setVideos((prevVideos) => {
-          return prevVideos.map((video) => {
-            if (video._id === videoId) {
-              return {
-                ...video,
-                views: video.views + 1,
-              };
-            }
-            return video;
-          });
+        const updatedVideos = displayedVideos.map((video) => {
+          if (video._id === videoId) {
+            return {
+              ...video,
+              views: video.views + 1,
+            };
+          }
+          return video;
         });
+
+        // Update hasil pencarian atau kategori sesuai konteks saat ini
+        if (searchResults) {
+          setSearchResults(updatedVideos);
+        } else if (categoryResults) {
+          setCategoryResults(updatedVideos);
+        }
       }
     } catch (error) {
       console.error('Error incrementing view count:', error);
@@ -120,16 +115,14 @@ function App() {
   };
 
   const fetchVideosByCategory = async (categoryId) => {
-    setLoading(true);
     try {
       const response = await axios.get(
         `${BASE_URL}/videos/category/${categoryId}`
       );
-      setVideos(response.data);
+      setCategoryResults(response.data);
+      setSearchResults(null);
     } catch (error) {
       setError(error);
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -138,7 +131,7 @@ function App() {
     setActiveTabId(categoryId);
   };
 
-  if (loading) return <Loading />;
+  if (videosLoading || categoriesLoading) return <Loading />;
   if (error) return <Error>Error: {error.message}</Error>;
 
   return (
@@ -155,10 +148,10 @@ function App() {
             path='/'
             element={
               <HomePage
-                videos={videos}
+                videos={displayedVideos}
                 fetchProductsByVideoId={fetchProductsByVideoId}
                 incrementViewCount={incrementViewCount}
-                loading={loading}
+                loading={categoriesLoading}
               />
             }
           />
@@ -166,13 +159,13 @@ function App() {
             path='/video/:videoId'
             element={
               <VideoDetailPage
-                videos={videos}
+                videos={displayedVideos}
                 allProducts={products}
                 allComments={comments}
                 postComment={postComment}
                 fetchComments={fetchCommentsByVideoId}
                 fetchProductsByVideoId={fetchProductsByVideoId}
-                loading={loading}
+                loading={videosLoading}
               />
             }
           />
